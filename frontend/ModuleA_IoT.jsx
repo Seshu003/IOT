@@ -8,8 +8,11 @@ import {
   Search, PlusCircle, Check, RotateCcw, Sparkles, TrendingUp, Send,
   ChevronDown, ChevronUp
 } from 'lucide-react';
+import '../styles/variables.css';
+import '../styles/global.css';
 import '../styles/iot.css';
 import ArchitectureTopology from '../components/ArchitectureTopology';
+import HardwareBridgeModal from '../components/HardwareBridgeModal';
 
 // SVG Sparkline Component for Operational Trend Context
 function Sparkline({ values, color = '#1B2A4A', width = 64, height = 20, status = 'active' }) {
@@ -169,8 +172,9 @@ export default function ModuleA_IoT() {
   const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState('hud'); // 'hud' | 'kanban' | 'alerts' | 'architecture' | '3d'
 
-  // Work Order Modal State
+  // Work Order & Hardware Modal State
   const [showWorkOrderModal, setShowWorkOrderModal] = useState(false);
+  const [showHardwareModal, setShowHardwareModal] = useState(false);
   const [newWOTitle, setNewWOTitle] = useState('');
   const [newWODesc, setNewWODesc] = useState('');
   const [newWOPriority, setNewWOPriority] = useState('Medium Priority');
@@ -482,6 +486,14 @@ export default function ModuleA_IoT() {
           <span className="badge badge-active flex-row-center gap-1 font-mono">
             <Clock size={12} /> {currentTime}
           </span>
+          <button 
+            className="btn btn-xs btn-primary flex-row-center gap-1"
+            onClick={() => setShowHardwareModal(true)}
+            style={{ background: '#0284C7', color: '#FFFFFF', border: 'none', padding: '4px 10px', borderRadius: '6px', fontWeight: 600, fontSize: '0.75rem', cursor: 'pointer' }}
+            title="Configure Real Physical Hardware Sensors & MQTT Bridge"
+          >
+            <Cpu size={13} /> Hardware Bridge
+          </button>
           <button 
             className="btn btn-xs btn-secondary flex-row-center gap-1"
             onClick={handleTriggerSimulation}
@@ -1836,6 +1848,9 @@ function Device3DSimulation({ machine, telemetry, onClose }) {
           <div className="font-mono font-bold" style={{ fontSize: '0.95rem', color: '#38BDF8' }}>{press} PSI</div>
         </div>
       </div>
+
+      {/* Real Hardware Sensor Integration Bridge Modal */}
+      <HardwareBridgeModal isOpen={showHardwareModal} onClose={() => setShowHardwareModal(false)} />
     </div>
   );
 }

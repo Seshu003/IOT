@@ -1,8 +1,41 @@
+const os = require('os');
 const express = require('express');
 const router = express.Router();
-const db = require('../config/db');
-const { getLatestMachineState } = require('../mqtt/telemetrySubscriber');
-const { authenticateToken } = require('../middleware/auth');
+const db = require('./config/db');
+const { getLatestMachineState, getHardwareStats } = require('./mqtt/telemetrySubscriber');
+const { setSimulatorEnabled, isSimulatorEnabled } = require('./simulator/deviceSimulator');
+const { authenticateToken } = require('./middleware/auth');
+
+function getLocalIpAddress() {
+  const interfaces = os.networkInterfaces();
+  for (const devName in interfaces) {
+    const iface = interfaces[devName];
+    for (let i = 0; i < iface.length; i++) {
+      const alias = iface[i];
+      if (alias.family === 'IPv4' && !alias.internal) {
+        return alias.address;
+      }
+    }
+  }
+  return '127.0.0.1';
+}
+
+// GET /api/iot/hardware/status
+router.get('/hardware/status', authenticateToken, (req, res) => {
+  res.json({
+    hardwareStats: getHardwareStats(),
+    simulatorEnabled: isSimulatorEnabled(),
+    localIp: getLocalIpAddress(),
+    mqttPort: 1883
+  });
+});
+
+// POST /api/iot/simulator/toggle
+router.post('/simulator/toggle', authenticateToken, (req, res) => {
+  const { enabled } = req.body;
+  const newState = setSimulatorEnabled(enabled);
+  res.json({ simulatorEnabled: newState });
+});
 
 // GET /api/iot/machines
 router.get('/machines', authenticateToken, async (req, res) => {

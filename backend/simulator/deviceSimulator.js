@@ -2,9 +2,9 @@ const mqtt = require('mqtt');
 
 let client = null;
 let simulationInterval = null;
+let simulatorEnabled = true;
+const overriddenMachines = new Set();
 
-// Baseline values per machine type
-// Baseline values per machine type for all 8 industrial equipment categories
 const BASELINES = {
   motor: {
     vibration: { base: 2.2, noise: 0.4, spikeProb: 0.05, spikeVal: 8.2, unit: 'mm/s' },
@@ -64,9 +64,11 @@ function startSimulator(brokerUrl = 'mqtt://localhost:1883', machineCount = 32) 
   client.on('connect', () => {
     console.log(`🤖 IoT Virtual Simulator connected to ${brokerUrl}. Generating unique telemetry for ${machineCount} machines...`);
 
-    // Stream telemetry every 3 seconds
+    if (simulationInterval) clearInterval(simulationInterval);
     simulationInterval = setInterval(() => {
-      publishTelemetryBatch(machineCount);
+      if (simulatorEnabled) {
+        publishTelemetryBatch(machineCount);
+      }
     }, 3000);
   });
 
@@ -82,6 +84,8 @@ function publishTelemetryBatch(machineCount) {
 
   for (let i = 1; i <= machineCount; i++) {
     const mId = `mach_${String(i).padStart(3, '0')}`;
+    if (overriddenMachines.has(mId)) continue; // Skip physical hardware target machines
+
     const typeIndex = Math.floor((i - 1) / 4);
     const type = machineTypes[typeIndex] || 'motor';
     const siteId = i > 16 ? 'site_beta' : 'site_alpha';
@@ -111,6 +115,7 @@ function publishTelemetryBatch(machineCount) {
         sensorType,
         value: val,
         unit: config.unit,
+        source: 'simulator',
         quality: isSpike ? 'warning' : 'good',
         battery: 85 + (i % 15),
         signalStrength: -60 - (i % 10)
@@ -133,4 +138,28 @@ function stopSimulator() {
   if (client) client.end();
 }
 
-module.exports = { startSimulator, stopSimulator };
+function setSimulatorEnabled(enabled) {
+  simulatorEnabled = !!enabled;
+  console.log(`🤖 IoT Virtual Simulator toggled: ${simulatorEnabled ? 'ENABLED' : 'DISABLED'}`);
+  return simulatorEnabled;
+}
+
+function isSimulatorEnabled() {
+  return simulatorEnabled;
+}
+
+function setMachineOverridden(machineId, overridden) {
+  if (overridden) {
+    overriddenMachines.add(machineId);
+  } else {
+    overriddenMachines.delete(machineId);
+  }
+}
+
+module.exports = {
+  startSimulator,
+  stopSimulator,
+  setSimulatorEnabled,
+  isSimulatorEnabled,
+  setMachineOverridden
+};
