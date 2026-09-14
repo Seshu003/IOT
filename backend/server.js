@@ -7,13 +7,15 @@ const { startMqttBroker } = require('./mqtt/broker');
 const { startTelemetrySubscriber } = require('./mqtt/telemetrySubscriber');
 const { startSimulator } = require('./simulator/deviceSimulator');
 const iotRoutes = require('./iotRoutes');
+const { getConfiguredToken, isValidBearerToken } = require('./middleware/auth');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
-const MQTT_PORT = process.env.MQTT_PORT || 1883;
+const PORT = Number(process.env.PORT || 5000);
+const MQTT_PORT = Number(process.env.MQTT_PORT || 1883);
+const allowedOrigins = (process.env.CORS_ORIGIN || 'http://localhost:3000').split(',').map((origin) => origin.trim());
 
 // Middleware
-app.use(cors({ origin: '*' }));
+app.use(cors({ origin: allowedOrigins }));
 app.use(express.json());
 
 // Routes
@@ -34,9 +36,16 @@ const server = http.createServer(app);
 // Initialize Socket.IO Server
 const io = new Server(server, {
   cors: {
-    origin: '*',
+    origin: allowedOrigins,
     methods: ['GET', 'POST']
   }
+});
+
+io.use((socket, next) => {
+  const configuredToken = getConfiguredToken();
+  const token = socket.handshake.auth && socket.handshake.auth.token;
+  if (isValidBearerToken('Bearer', token, configuredToken)) return next();
+  return next(new Error('A valid bearer token is required'));
 });
 
 io.on('connection', (socket) => {

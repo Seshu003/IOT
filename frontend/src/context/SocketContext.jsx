@@ -13,7 +13,9 @@ export const SocketProvider = ({ children }) => {
   const [alerts, setAlerts] = useState([]);
 
   useEffect(() => {
-    const socket = io('http://localhost:5000', {
+    const token = localStorage.getItem('auth_token') || import.meta.env.VITE_API_TOKEN || (import.meta.env.MODE === 'development' ? 'demo-token' : '');
+    const socket = io(import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000', {
+      auth: { token },
       transports: ['websocket', 'polling'],
       reconnectionAttempts: 10,
       reconnectionDelay: 1000

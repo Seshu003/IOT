@@ -59,7 +59,7 @@ const BASELINES = {
 };
 
 function startSimulator(brokerUrl = 'mqtt://localhost:1883', machineCount = 32) {
-  client = mqtt.connect(brokerUrl);
+  client = mqtt.connect(brokerUrl, getMqttCredentials());
 
   client.on('connect', () => {
     console.log(`🤖 IoT Virtual Simulator connected to ${brokerUrl}. Generating unique telemetry for ${machineCount} machines...`);
@@ -131,6 +131,12 @@ function getLineForIndex(i) {
   if (i <= 12) return 'line_pump_2';
   if (i <= 18) return 'line_comp_3';
   return 'line_conv_4';
+}
+
+function getMqttCredentials() {
+  return process.env.MQTT_USERNAME && process.env.MQTT_PASSWORD
+    ? { username: process.env.MQTT_USERNAME, password: process.env.MQTT_PASSWORD }
+    : {};
 }
 
 function stopSimulator() {

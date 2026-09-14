@@ -64,16 +64,16 @@ router.get('/hierarchy', authenticateToken, async (req, res) => {
 
     // Demo fallback hierarchy data
     return res.json({
-      companies: [{ id: 'cmp_apex', name: 'Apex Industrial Manufacturing' }],
+      companies: [{ id: 'cmp_apex', name: 'Bharat Industrial Systems' }],
       sites: [
-        { id: 'site_alpha', name: 'Detroit MegaPlant Alpha', location: 'Detroit, MI' },
-        { id: 'site_beta', name: 'Houston Refinery Beta', location: 'Houston, TX' }
+        { id: 'site_alpha', name: 'Pune Integrated Works', location: 'Pune, Maharashtra' },
+        { id: 'site_beta', name: 'Jamshedpur Steel Works', location: 'Jamshedpur, Jharkhand' }
       ],
       lines: [
-        { id: 'line_motor_1', site_id: 'site_alpha', name: 'Motor Drive Line A1' },
-        { id: 'line_pump_2', site_id: 'site_alpha', name: 'Hydraulic Pumping Station A2' },
-        { id: 'line_comp_3', site_id: 'site_beta', name: 'Gas Compression Unit B1' },
-        { id: 'line_conv_4', site_id: 'site_beta', name: 'Heavy Assembly Conveyor B2' }
+        { id: 'line_motor_1', site_id: 'site_alpha', name: 'Bharat Motor Assembly Line' },
+        { id: 'line_pump_2', site_id: 'site_alpha', name: 'Godavari Pumping Station' },
+        { id: 'line_comp_3', site_id: 'site_beta', name: 'Himalaya Compression Unit' },
+        { id: 'line_conv_4', site_id: 'site_beta', name: 'Ganga Assembly Line' }
       ],
       machines: generateFallbackMachines()
     });
@@ -126,7 +126,7 @@ router.get('/alerts', authenticateToken, async (req, res) => {
         {
           id: 'alt_sample_01',
           machine_id: 'mach_001',
-          machine_name: 'Electric Drive Motor #1',
+          machine_name: 'Bharat Electric Drive Motor #1',
           severity: 'Warning',
           type: 'Threshold_High',
           message: 'Vibration level exceeded baseline tolerance (7.8 mm/s)',
@@ -159,9 +159,9 @@ router.get('/work-orders', authenticateToken, async (req, res) => {
           id: 'wo_sample_01',
           alert_id: 'alt_sample_01',
           machine_id: 'mach_001',
-          machine_name: 'Electric Drive Motor #1',
+          machine_name: 'Bharat Electric Drive Motor #1',
           assigned_to: 'usr_technician_1',
-          assigned_name: 'Dave Miller (Senior Tech)',
+          assigned_name: 'Ravi Kulkarni (Senior Technician)',
           priority: 'High',
           status: 'In_Progress',
           root_cause: 'Bearing wear on primary shaft',
@@ -179,14 +179,14 @@ router.get('/work-orders', authenticateToken, async (req, res) => {
 function generateFallbackMachines() {
   const list = [];
   const types = [
-    { type: 'motor', name: 'Electric Drive Motor', lineId: 'line_motor_1' },
-    { type: 'pump', name: 'Centrifugal Slurry Pump', lineId: 'line_pump_2' },
-    { type: 'compressor', name: 'Reciprocating Compressor', lineId: 'line_comp_3' },
-    { type: 'conveyor', name: 'Heavy Belt Conveyor', lineId: 'line_conv_4' },
-    { type: 'robot', name: '6-Axis Weld Robot', lineId: 'line_robot_5' },
-    { type: 'furnace', name: 'Induction Blast Furnace', lineId: 'line_furnace_6' },
-    { type: 'cnc', name: '5-Axis Precision CNC Mill', lineId: 'line_cnc_7' },
-    { type: 'blower', name: 'High-Volume Plant Blower', lineId: 'line_blower_8' }
+    { type: 'motor', name: 'Bharat Electric Drive Motor', lineId: 'line_motor_1' },
+    { type: 'pump', name: 'Godavari Process Pump', lineId: 'line_pump_2' },
+    { type: 'compressor', name: 'Himalaya Air Compressor', lineId: 'line_comp_3' },
+    { type: 'conveyor', name: 'Ganga Assembly Conveyor', lineId: 'line_conv_4' },
+    { type: 'robot', name: 'Arjun Welding Robot', lineId: 'line_robot_5' },
+    { type: 'furnace', name: 'Bharat Induction Furnace', lineId: 'line_furnace_6' },
+    { type: 'cnc', name: 'Vikram Precision CNC Mill', lineId: 'line_cnc_7' },
+    { type: 'blower', name: 'Monsoon Plant Blower', lineId: 'line_blower_8' }
   ];
 
   let c = 1;

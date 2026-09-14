@@ -19,7 +19,7 @@ const THRESHOLDS = {
 };
 
 function startTelemetrySubscriber(brokerUrl = 'mqtt://localhost:1883', io = null) {
-  mqttClient = mqtt.connect(brokerUrl);
+  mqttClient = mqtt.connect(brokerUrl, getMqttCredentials());
 
   mqttClient.on('connect', () => {
     console.log('📥 Telemetry Subscriber connected to MQTT Broker. Subscribing to telemetry streams...');
@@ -173,6 +173,12 @@ function processTelemetryPoint({ machineId, siteId, lineId, sensorType, value, u
       machineStatus: latestMachineState[machineId].status
     });
   }
+}
+
+function getMqttCredentials() {
+  return process.env.MQTT_USERNAME && process.env.MQTT_PASSWORD
+    ? { username: process.env.MQTT_USERNAME, password: process.env.MQTT_PASSWORD }
+    : {};
 }
 
 function getUnitForSensor(sensorType) {

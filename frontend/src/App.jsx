@@ -1,6 +1,6 @@
 import React from 'react';
 import { SocketProvider } from './context/SocketContext';
-import ModuleA_IoT from './ModuleA_IoT';
+import ModuleA_IoT from './ModuleA_Minimal';
 
 export default function App() {
   return (

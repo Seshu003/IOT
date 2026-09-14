@@ -66,68 +66,68 @@ function getDiagnosticReason(machine, liveData, mBase) {
 }
 
 const MACHINE_TYPES = {
-  motor: 'Electric Drive Motor',
-  pump: 'Centrifugal Slurry Pump',
-  compressor: 'Reciprocating Compressor',
-  conveyor: 'Heavy Belt Conveyor',
-  robot: 'Articulated Weld Robot',
-  furnace: 'Induction Blast Furnace',
-  cnc: '5-Axis Precision CNC Mill',
-  blower: 'High-Volume Plant Blower'
+  motor: 'Bharat Electric Drive Motor',
+  pump: 'Godavari Process Pump',
+  compressor: 'Himalaya Air Compressor',
+  conveyor: 'Ganga Assembly Conveyor',
+  robot: 'Arjun Welding Robot',
+  furnace: 'Bharat Induction Furnace',
+  cnc: 'Vikram Precision CNC Mill',
+  blower: 'Monsoon Plant Blower'
 };
 
 const CATEGORY_CONFIG = {
   motor: {
-    label: 'Electric Drive Motors',
+    label: 'Bharat Electric Motors',
     color: '#1B2A4A',
     bg: '#F0F4F8',
     border: '#E8E9ED',
     icon: Cpu
   },
   pump: {
-    label: 'Centrifugal Slurry Pumps',
+    label: 'Godavari Process Pumps',
     color: '#0D9488',
     bg: '#F0FDFA',
     border: '#CCFBF1',
     icon: Zap
   },
   compressor: {
-    label: 'Industrial Compressors',
+    label: 'Himalaya Compressors',
     color: '#4F46E5',
     bg: '#EEF2FF',
     border: '#E0E7FF',
     icon: Activity
   },
   conveyor: {
-    label: 'Heavy Belt Conveyors',
+    label: 'Ganga Assembly Conveyors',
     color: '#D97706',
     bg: '#FFFBEB',
     border: '#FEF3C7',
     icon: Sliders
   },
   robot: {
-    label: '6-Axis Weld Robots',
+    label: 'Arjun Welding Robots',
     color: '#E11D48',
     bg: '#FFF1F2',
     border: '#FFE4E6',
     icon: Layers
   },
   furnace: {
-    label: 'Induction Blast Furnaces',
+    label: 'Bharat Induction Furnaces',
     color: '#C2410C',
     bg: '#FFF7ED',
     border: '#FFEDD5',
     icon: Flame
   },
   cnc: {
-    label: '5-Axis Precision CNC Mills',
+    label: 'Vikram Precision CNC Mills',
     color: '#7C3AED',
     bg: '#F5F3FF',
     border: '#DDD6FE',
     icon: Wrench
   },
   blower: {
-    label: 'High-Volume Plant Blowers',
+    label: 'Monsoon Plant Blowers',
     color: '#0284C7',
     bg: '#F0F9FF',
     border: '#E0F2FE',
@@ -445,10 +445,10 @@ export default function ModuleA_IoT() {
       <div className="hud-top-banner">
         <div>
           <h1 className="hud-title-text flex-row-center gap-2">
-            <Radio className="module-feature-bullet" size={24} /> Plant Command Hub
+            <Radio className="module-feature-bullet" size={24} /> Bharat Industrial Command Centre
           </h1>
           <p className="hud-tagline">
-            Master the Operations Cosmos • Real-Time Telemetry & Asset Command
+            Pune Manufacturing Campus • Live asset health and maintenance control
           </p>
         </div>
 
@@ -492,14 +492,14 @@ export default function ModuleA_IoT() {
             style={{ background: '#0284C7', color: '#FFFFFF', border: 'none', padding: '4px 10px', borderRadius: '6px', fontWeight: 600, fontSize: '0.75rem', cursor: 'pointer' }}
             title="Configure Real Physical Hardware Sensors & MQTT Bridge"
           >
-            <Cpu size={13} /> Hardware Bridge
+            <Cpu size={13} /> Sensor Gateway
           </button>
           <button 
             className="btn btn-xs btn-secondary flex-row-center gap-1"
             onClick={handleTriggerSimulation}
             title="Simulate Telemetry Pulse on Focus Machine"
           >
-            <Sparkles size={12} /> Pulse Sim
+            <Sparkles size={12} /> Test Alert
           </button>
         </div>
       </div>
@@ -573,7 +573,7 @@ export default function ModuleA_IoT() {
             <input
               type="text"
               className="hud-search-input"
-              placeholder="Search 32 field nodes..."
+              placeholder="Search 32 production assets..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -597,31 +597,31 @@ export default function ModuleA_IoT() {
             className={`menu-hud-btn ${viewMode === 'hud' && selectedSite === 'all' && selectedCategory === 'all' ? 'active' : ''}`}
             onClick={() => { setViewMode('hud'); setSelectedSite('all'); setSelectedCategory('all'); }}
           >
-            <Shield size={16} /> Overview Command
+            <Shield size={16} /> Operations Overview
           </button>
 
           <button
             className={`menu-hud-btn ${viewMode === 'architecture' ? 'active' : ''}`}
             onClick={() => setViewMode('architecture')}
           >
-            <Layers size={16} /> Architecture & 3D Topology
+            <Layers size={16} /> Plant Network & 3D View
           </button>
 
-          <div className="glass-subtitle mt-2 mb-1 text-uppercase font-bold">Plants & Sites</div>
+          <div className="glass-subtitle mt-2 mb-1 text-uppercase font-bold">Indian Plants</div>
           <button
             className={`menu-hud-btn ${selectedSite === 'site_alpha' ? 'active' : ''}`}
             onClick={() => { setViewMode('hud'); setSelectedSite('site_alpha'); }}
           >
-            <Layers size={16} /> Detroit Alpha <span className="menu-badge">16</span>
+            <Layers size={16} /> Pune Plant <span className="menu-badge">16</span>
           </button>
           <button
             className={`menu-hud-btn ${selectedSite === 'site_beta' ? 'active' : ''}`}
             onClick={() => { setViewMode('hud'); setSelectedSite('site_beta'); }}
           >
-            <Layers size={16} /> Houston Beta <span className="menu-badge">16</span>
+            <Layers size={16} /> Jamshedpur Plant <span className="menu-badge">16</span>
           </button>
 
-          <div className="glass-subtitle mt-2 mb-1 text-uppercase font-bold">Equipment Category</div>
+          <div className="glass-subtitle mt-2 mb-1 text-uppercase font-bold">Equipment Groups</div>
           <button
             className={`menu-hud-btn ${selectedCategory === 'motor' ? 'active' : ''}`}
             onClick={() => { setViewMode('hud'); setSelectedCategory('motor'); }}
@@ -671,12 +671,12 @@ export default function ModuleA_IoT() {
             <RefreshCw size={16} /> Plant Blowers <span className="menu-badge">4</span>
           </button>
 
-          <div className="glass-subtitle mt-2 mb-1 text-uppercase font-bold">Views & Simulations</div>
+          <div className="glass-subtitle mt-2 mb-1 text-uppercase font-bold">Monitoring Views</div>
           <button
             className={`menu-hud-btn ${viewMode === '3d' ? 'active' : ''}`}
             onClick={() => setViewMode('3d')}
           >
-            <Compass size={16} /> 3D Digital Twin View <span className="menu-badge">Live</span>
+            <Compass size={16} /> 3D Equipment View <span className="menu-badge">Live</span>
           </button>
           <button
             className={`menu-hud-btn ${viewMode === 'alerts' ? 'active' : ''}`}
@@ -707,14 +707,14 @@ export default function ModuleA_IoT() {
                 <div className="glass-panel">
                   <div className="glass-panel-header">
                     <div className="glass-title">
-                      <Crosshair size={18} className="module-feature-bullet" /> Node Focus: {activeFocusMachine.name}
+                      <Crosshair size={18} className="module-feature-bullet" /> Asset Focus: {activeFocusMachine.name}
                     </div>
                     <div className="flex-row-center gap-2">
                       <span className={`badge badge-${activeFocusMachine.status === 'critical' ? 'critical' : activeFocusMachine.status === 'degraded' ? 'degraded' : 'active'}`}>
                         {activeFocusMachine.status.toUpperCase()}
                       </span>
                       <span className="hud-chip font-mono">
-                        NODE #{String(activeFocusMachine.id || 'mach_001').toUpperCase()}
+                        ASSET #{String(activeFocusMachine.id || 'mach_001').toUpperCase()}
                       </span>
                     </div>
                   </div>
@@ -778,7 +778,7 @@ export default function ModuleA_IoT() {
                 {/* PANEL 1: Dynamic Pentagon Radar Chart */}
                 <div className="glass-panel">
                   <div className="glass-panel-header">
-                    <div className="glass-title">Node Performance</div>
+                    <div className="glass-title">Asset Performance</div>
                   </div>
                   <div className="radar-container">
                     <svg width="180" height="150" viewBox="0 0 200 180" className="radar-svg">
@@ -907,7 +907,7 @@ export default function ModuleA_IoT() {
                   <h3 className="heading-md mb-2">In Progress ({workOrders.filter(w => w.status === 'In Progress').length})</h3>
                   <div className="submission-item-card selected">
                     <strong className="heading-md">WO #002 — Pump Shaft Calibration</strong>
-                    <p className="subtext mt-1">Assigned to Senior Tech Dave Miller</p>
+                    <p className="subtext mt-1">Assigned to Senior Technician Ravi Kulkarni</p>
                     <span className="badge badge-degraded mt-2 inline-block">In Progress</span>
                   </div>
                 </div>
@@ -943,7 +943,7 @@ export default function ModuleA_IoT() {
                 )) : (
                   <div className="submission-item-card">
                     <strong className="heading-md text-success">No active alerts</strong>
-                    <p className="subtext mt-1">All monitored machines operating within nominal sensor thresholds.</p>
+                    <p className="subtext mt-1">All monitored assets are operating within their approved sensor limits.</p>
                   </div>
                 )}
               </div>
@@ -956,22 +956,22 @@ export default function ModuleA_IoT() {
           {/* Site Specification Glass Table */}
           <div className="glass-panel">
             <div className="glass-panel-header">
-              <div className="glass-title">Plant Overview</div>
+              <div className="glass-title">Plant Profile</div>
             </div>
 
             <table className="overview-table">
               <tbody>
                 <tr>
                   <td><span className="table-cell-icon"><Anchor size={14} /> Site Name</span></td>
-                  <td>{selectedSite === 'site_beta' ? 'Houston Refinery' : 'Detroit MegaPlant'}</td>
+                  <td>{selectedSite === 'site_beta' ? 'Jamshedpur Steel Works' : 'Pune Integrated Works'}</td>
                 </tr>
                 <tr>
-                  <td><span className="table-cell-icon"><Compass size={14} /> Gateway Node</span></td>
-                  <td>{selectedSite === 'site_beta' ? 'Gateway Beta-01' : 'Gateway Alpha-01'}</td>
+                  <td><span className="table-cell-icon"><Compass size={14} /> Plant Gateway</span></td>
+                  <td>{selectedSite === 'site_beta' ? 'Jamshedpur Gateway-01' : 'Pune Gateway-01'}</td>
                 </tr>
                 <tr>
                   <td><span className="table-cell-icon"><Layers size={14} /> Fleet Size</span></td>
-                  <td>{displayList.length} Active Nodes</td>
+                  <td>{displayList.length} Monitored Assets</td>
                 </tr>
                 <tr>
                   <td><span className="table-cell-icon"><Radio size={14} /> Operations Role</span></td>
@@ -1022,7 +1022,7 @@ export default function ModuleA_IoT() {
               if (safeMachines.length > 0) setSelectedMachine(safeMachines[0]);
             }}
           >
-            <Server size={16} /> All Monitored Devices <span className="tab-count-badge">32</span>
+            <Server size={16} /> All Production Assets <span className="tab-count-badge">32</span>
           </button>
           
           <button
@@ -1118,10 +1118,10 @@ export default function ModuleA_IoT() {
           <div>
             <h2 className="heading-lg">
               {selectedCategory === 'all'
-                ? `All Monitored Telemetry Machine Nodes (${displayList.length})`
-                : `${selectedCategory.toUpperCase()} Nodes (${displayList.length})`}
+                ? `All monitored production assets (${displayList.length})`
+                : `${selectedCategory.toUpperCase()} Assets (${displayList.length})`}
             </h2>
-            <p className="hud-tagline">Click any machine node to focus real-time analytics • Toggle row details inline</p>
+            <p className="hud-tagline">Select an asset to inspect live readings and maintenance health</p>
           </div>
 
           <div className="flex-row-center gap-2">
@@ -1152,13 +1152,13 @@ export default function ModuleA_IoT() {
               className={`btn btn-sm ${selectedSite === 'site_alpha' ? 'btn-primary' : 'btn-secondary'}`}
               onClick={() => setSelectedSite('site_alpha')}
             >
-              Detroit (16)
+              Pune (16)
             </button>
             <button
               className={`btn btn-sm ${selectedSite === 'site_beta' ? 'btn-primary' : 'btn-secondary'}`}
               onClick={() => setSelectedSite('site_beta')}
             >
-              Houston (16)
+              Jamshedpur (16)
             </button>
           </div>
         </div>
@@ -1180,7 +1180,7 @@ export default function ModuleA_IoT() {
                     <span>{cfg.label}</span>
                   </div>
                   <span className="hud-chip font-mono">
-                    {clusterItems.length} Monitored Nodes
+                    {clusterItems.length} Monitored Assets
                   </span>
                 </div>
 
